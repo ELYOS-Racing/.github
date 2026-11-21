@@ -28,7 +28,21 @@ Reglas de la organización [`ELYOS-Racing`](https://github.com/ELYOS-Racing). Ap
 
 - Todo entra por PR; nadie aprueba el suyo.
 - **1 aprobación + CI en verde** para hacer merge.
-- **`safety-critical`** (driver, protocolo, frenos/dirección del ADC, paro de emergencia): **2 aprobaciones + evidencia de banco** (sesión de prueba enlazada).
+- **`safety-critical`** (driver, protocolo, lazo de control y navegación del ADC, frenos/dirección, paro de emergencia): **2 aprobaciones + evidencia de banco** (sesión de prueba enlazada).
+- **Revisor único calificado.** Si un área tiene una sola persona calificada para revisar su lógica `safety-critical`, esa persona queda registrada abajo y en el `CODEOWNERS` del repo, y puede hacer merge de sus propios PRs `safety-critical` con override si:
+  1. el CI está en verde;
+  2. el PR incluye una **autorrevisión escrita**: qué cambia, qué podría romperse, cómo se probó y a qué release o tag se regresa si falla;
+  3. pasan al menos **12 horas** entre abrir el PR y el merge (salvo hotfix en competencia);
+  4. la evidencia de banco va enlazada o, si se difiere, hay un **issue de prueba posterior** (`type:test`, etiqueta `prueba-pendiente`) enlazado al PR, que debe cerrarse con su sesión de prueba antes del siguiente gate o release.
+
+  Los profesores son asesores: se les informa, no son aprobadores técnicos. Las 2 aprobaciones vuelven cuando el líder declare un segundo revisor calificado en `CODEOWNERS`.
+
+  | Área | Revisor único | Desde |
+  |---|---|---|
+  | Driver del motor (`fw-motor-driver`) y protocolo (`fw-protocol`) | `luisxavierxd` | 21-nov-2026 |
+  | Lazo de control y navegación del ADC (`adc-stack`) | `luisxavierxd` | 21-nov-2026 |
+
+  Datos, análisis y dashboards siguen la regla general (1 aprobación de otra persona). La concentración de conocimiento es un riesgo registrado en `sys-integration` (bus factor).
 - Las ramas se borran al hacer merge.
 - **Override de owners.** Los owners pueden hacer merge con bypass de reglas (sin las aprobaciones requeridas) en cambios de **estructura, migración o mantenimiento de la org**: plantillas, licencias, CI, configuración, renombres y documentación de organización. Nunca en cambios de lógica `safety-critical`. El PR dice que se usó el override y por qué.
 - Docs en español; identificadores de código en inglés.
