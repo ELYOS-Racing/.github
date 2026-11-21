@@ -30,6 +30,7 @@ Reglas de la organización [`ELYOS-Racing`](https://github.com/ELYOS-Racing). Ap
 - **1 aprobación + CI en verde** para hacer merge.
 - **`safety-critical`** (driver, protocolo, frenos/dirección del ADC, paro de emergencia): **2 aprobaciones + evidencia de banco** (sesión de prueba enlazada).
 - Las ramas se borran al hacer merge.
+- **Override de owners.** Los owners pueden hacer merge con bypass de reglas (sin las aprobaciones requeridas) en cambios de **estructura, migración o mantenimiento de la org**: plantillas, licencias, CI, configuración, renombres y documentación de organización. Nunca en cambios de lógica `safety-critical`. El PR dice que se usó el override y por qué.
 - Docs en español; identificadores de código en inglés.
 - Detalle del flujo en [`CONTRIBUTING.md`](CONTRIBUTING.md).
 
