@@ -24,10 +24,11 @@ Guía general para todos los repos de [`ELYOS-Racing`](https://github.com/ELYOS-
    driver: sincroniza lectura de corriente con PWM
    ```
 
-4. **PR.** Llena la plantilla, enlaza el issue (`Closes #42`) y espera CI en verde.
-   - 1 aprobación de alguien que no seas tú.
-   - `safety-critical`: 2 aprobaciones + sesión de prueba de banco enlazada.
-5. **Merge.** Lo hace quien aprueba o el autor tras la aprobación. La rama se borra.
+4. **PR.** Llena la plantilla (qué cambia y cómo se probó), enlaza el issue (`Closes #42`) y espera CI en verde.
+   - Si eres **contribuidor calificado** de tu área, puedes hacer merge de tu propio PR.
+   - Si no, pide la aprobación de un calificado de tu área.
+   - `safety-critical`: enlaza la sesión de banco o abre un issue `prueba-pendiente`.
+5. **Merge.** La rama se borra.
 
 ## Bloqueos entre áreas
 
