@@ -1,0 +1,39 @@
+name: Solicitud de cambio
+description: Cambio a la línea base (alcance, fechas de gate o ruta crítica, costo) o hotfix después del freeze
+labels: ["type:change"]
+body:
+  - type: markdown
+    attributes:
+      value: "Proceso completo en [`pm/CAMBIOS.md`](https://github.com/ELYOS-Racing/sys-integration/blob/main/pm/CAMBIOS.md). Lo aprueba un owner."
+  - type: textarea
+    id: cambio
+    attributes:
+      label: Qué cambia
+    validations:
+      required: true
+  - type: textarea
+    id: porque
+    attributes:
+      label: Por qué
+    validations:
+      required: true
+  - type: textarea
+    id: impacto
+    attributes:
+      label: Impacto
+      value: |
+        - Alcance:
+        - Fechas (gates, ruta crítica):
+        - Costo:
+        - Riesgo y seguridad:
+    validations:
+      required: true
+  - type: textarea
+    id: alternativas
+    attributes:
+      label: Alternativas consideradas
+  - type: textarea
+    id: afectados
+    attributes:
+      label: Issues afectados
+      placeholder: "#12, fw-telemetry#30"

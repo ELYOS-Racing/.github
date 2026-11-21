@@ -1,0 +1,44 @@
+name: Riesgo
+description: Algo que podría impedir llegar a un gate o competir (PMBOK 8 · dominio Riesgo)
+labels: ["type:risk"]
+body:
+  - type: textarea
+    id: riesgo
+    attributes:
+      label: Riesgo
+      description: "Si <causa>, entonces <efecto> sobre <alcance, fecha, costo o seguridad>."
+    validations:
+      required: true
+  - type: dropdown
+    id: probabilidad
+    attributes:
+      label: Probabilidad
+      options: ["Baja", "Media", "Alta"]
+    validations:
+      required: true
+  - type: dropdown
+    id: impacto
+    attributes:
+      label: Impacto
+      options: ["Bajo", "Medio", "Alto", "Crítico (seguridad o no competir)"]
+    validations:
+      required: true
+  - type: dropdown
+    id: respuesta
+    attributes:
+      label: Estrategia de respuesta
+      options: ["Evitar", "Mitigar", "Transferir", "Aceptar", "Escalar"]
+    validations:
+      required: true
+  - type: textarea
+    id: plan
+    attributes:
+      label: Plan de respuesta y disparador
+      description: Qué se hace, quién, y qué señal indica que el riesgo se está materializando.
+    validations:
+      required: true
+  - type: textarea
+    id: afecta
+    attributes:
+      label: Issues o gates afectados
+      placeholder: "#12, G2"
