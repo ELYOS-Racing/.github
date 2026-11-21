@@ -1,4 +1,4 @@
-# Gobernanza de Silca Elyos Racing
+# Gobernanza de Elyos Racing Team
 
 Reglas de la organización [`ELYOS-Racing`](https://github.com/ELYOS-Racing). Aplican a todos los repos. Cambiarlas requiere un PR a este archivo aprobado por **2 owners** (regla 10).
 
@@ -53,7 +53,7 @@ Reglas de la organización [`ELYOS-Racing`](https://github.com/ELYOS-Racing). Ap
 
 - Las contribuciones quedan bajo la licencia del repo (PolyForm Strict 1.0.0 salvo excepciones documentadas en su `NOTICE.md`).
 - El DCO (`git commit -s`) certifica el derecho a aportar el código.
-- Titulares: Luis Xavier García Pimentel Ascencio y Silca Elyos Racing (ver el `Required Notice` de cada `LICENSE.md`).
+- Titulares: Luis Xavier García Pimentel Ascencio y Elyos Racing Team (ver el `Required Notice` de cada `LICENSE.md`).
 
 ## 9. Secretos
 

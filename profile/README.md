@@ -1,4 +1,4 @@
-# Silca Elyos Racing
+# Elyos Racing Team
 
 **Equipo estudiantil del Tec de Monterrey, campus Guadalajara, en el [Shell Eco-marathon](https://www.makethefuture.shell/en-gb/shell-eco-marathon).** Diseñamos y construimos un prototipo eléctrico de batería de máxima eficiencia y, desde 2026, un vehículo para el Autonomous Driving Challenge.
 
