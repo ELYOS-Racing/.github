@@ -1,0 +1,12 @@
+name: Etiqueta de área
+
+on:
+  issues:
+    types: [opened, edited]
+
+permissions:
+  issues: write
+
+jobs:
+  area:
+    uses: ELYOS-Racing/.github/.github/workflows/area-label.yml@main

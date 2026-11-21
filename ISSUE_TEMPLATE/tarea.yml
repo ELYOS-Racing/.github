@@ -1,0 +1,53 @@
+name: Tarea
+description: Trabajo planeado (funcionalidad, prueba, documentación, revisión)
+labels: ["type:feature"]
+body:
+  - type: dropdown
+    id: area
+    attributes:
+      label: Área
+      description: Pone la etiqueta area:* automáticamente.
+      options:
+        - "driver: firmware del driver del motor"
+        - "telemetry: firmware y software de telemetría"
+        - "protocol: protocolo entre placas"
+        - "dashboard: dashboard web de telemetría"
+        - "electronics: PCBs del prototipo"
+        - "mechanical: piezas y CAD del prototipo"
+        - "adc: Autonomous Driving Challenge"
+        - "integration: requisitos, arquitectura, interfaces, releases"
+        - "ops: logística, patrocinio, viajes, compras"
+        - "docs: solo documentación"
+        - "infra: CI, herramientas, servidores"
+    validations:
+      required: true
+  - type: textarea
+    id: que
+    attributes:
+      label: Qué hay que hacer
+      description: El problema o el objetivo, no la solución.
+    validations:
+      required: true
+  - type: textarea
+    id: criterio
+    attributes:
+      label: Criterio de aceptación
+      description: Cómo sabemos que está terminado. Incluye la evidencia (medición, prueba, release).
+      placeholder: "- [ ] ..."
+    validations:
+      required: true
+  - type: textarea
+    id: bloqueos
+    attributes:
+      label: Dependencias
+      description: Qué issues o interfaces tienen que estar listos antes. Márcalos también en Relationships → Mark as blocked by.
+  - type: dropdown
+    id: safety
+    attributes:
+      label: ¿Es safety-critical?
+      description: Driver, protocolo, frenos/dirección del ADC o paro de emergencia. Requiere 2 aprobaciones y evidencia de banco.
+      options:
+        - "No"
+        - "Sí"
+    validations:
+      required: true

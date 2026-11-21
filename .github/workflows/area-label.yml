@@ -1,0 +1,31 @@
+# Workflow reutilizable: etiqueta los issues según los desplegables de los issue forms de la org.
+# Cada repo lo llama con workflow-templates/area-label.yml.
+name: Etiqueta de área
+
+on:
+  workflow_call:
+
+jobs:
+  etiquetar:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: Leer el formulario y etiquetar
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          NUM: ${{ github.event.issue.number }}
+          BODY: ${{ github.event.issue.body }}
+        run: |
+          campo() { printf '%s\n' "$BODY" | tr -d '\r' | awk -v h="### $1" '$0==h{f=1;next} f&&NF{print;exit}'; }
+          area=$(campo "Área" | cut -d: -f1 | tr -d ' ')
+          case "$area" in
+            driver|telemetry|protocol|dashboard|electronics|mechanical|adc|integration|ops|docs|infra)
+              gh label create "area:$area" --repo "$REPO" --color 0366d6 2>/dev/null || true
+              gh issue edit "$NUM" --repo "$REPO" --add-label "area:$area" ;;
+            *) echo "Sin área reconocida: '$area'" ;;
+          esac
+          if [ "$(campo '¿Es safety-critical?')" = "Sí" ]; then
+            gh issue edit "$NUM" --repo "$REPO" --add-label "safety-critical"
+          fi

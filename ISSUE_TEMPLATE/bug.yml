@@ -1,0 +1,60 @@
+name: Bug
+description: Algo no funciona como debería
+labels: ["type:fix"]
+body:
+  - type: dropdown
+    id: area
+    attributes:
+      label: Área
+      description: Pone la etiqueta area:* automáticamente.
+      options:
+        - "driver: firmware del driver del motor"
+        - "telemetry: firmware y software de telemetría"
+        - "protocol: protocolo entre placas"
+        - "dashboard: dashboard web de telemetría"
+        - "electronics: PCBs del prototipo"
+        - "mechanical: piezas y CAD del prototipo"
+        - "adc: Autonomous Driving Challenge"
+        - "integration: requisitos, arquitectura, interfaces, releases"
+        - "ops: logística, patrocinio, viajes, compras"
+        - "docs: solo documentación"
+        - "infra: CI, herramientas, servidores"
+    validations:
+      required: true
+  - type: textarea
+    id: que-pasa
+    attributes:
+      label: Qué pasa
+    validations:
+      required: true
+  - type: textarea
+    id: esperado
+    attributes:
+      label: Qué debería pasar
+    validations:
+      required: true
+  - type: textarea
+    id: pasos
+    attributes:
+      label: Cómo reproducirlo
+      description: Pasos, entorno de PlatformIO, versión o commit, hardware conectado, logs.
+      placeholder: |
+        1.
+        2.
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Versión o commit
+      placeholder: v1.0.0 / abc1234
+  - type: dropdown
+    id: safety
+    attributes:
+      label: ¿Es safety-critical?
+      description: Driver, protocolo, frenos/dirección del ADC o paro de emergencia. Requiere 2 aprobaciones y evidencia de banco.
+      options:
+        - "No"
+        - "Sí"
+    validations:
+      required: true

@@ -1,0 +1,6 @@
+{
+  "name": "Etiqueta de área",
+  "description": "Etiqueta los issues con area:* y safety-critical según los issue forms de la org.",
+  "iconName": "octicon tag",
+  "categories": ["Automation"]
+}
