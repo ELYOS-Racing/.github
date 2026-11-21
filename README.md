@@ -20,4 +20,4 @@ Cambiar `GOVERNANCE.md` requiere 2 owners; el resto, 1 aprobación.
 
 ## Licencia
 
-[PolyForm Strict 1.0.0](LICENSE) © 2026 Luis Xavier García Pimentel Ascencio y Silca Elyos Racing.
+[PolyForm Strict 1.0.0](LICENSE.md) © 2026 Luis Xavier García Pimentel Ascencio y Silca Elyos Racing.
