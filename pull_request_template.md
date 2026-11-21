@@ -1,6 +1,6 @@
 ## Qué cambia
 
-<!-- Una o dos líneas. -->
+<!-- Una o dos líneas. Obligatorio: si eres contribuidor calificado, esto y «Cómo se probó» te permiten hacer merge de tu propio PR. -->
 
 Closes #
 
@@ -18,11 +18,9 @@ Closes #
 
 ## Safety-critical
 
-<!-- Marca solo si el PR toca driver, protocolo, frenos/dirección del ADC o paro de emergencia. Si no, borra esta sección. -->
+<!-- Marca solo si el PR toca driver, protocolo, lazo de control o navegación del ADC, frenos/dirección o paro de emergencia. Si no, borra esta sección. -->
 
 - [ ] Etiqueta `safety-critical` puesta
 - [ ] Sesión de prueba de banco enlazada (`sys-integration/tests/AAAA-MM-DD-tema.md`) o issue de prueba posterior (`prueba-pendiente`)
 - [ ] Reglas de banco respetadas (sin potencia al grabar firmware que activa el PWM; pruebas sin motor solo con USB)
 - [ ] Plan de reversión: release o rama a la que se vuelve si falla
-- [ ] Si lo revisa un revisor único: autorrevisión escrita abajo (qué cambia, qué podría romperse, cómo se probó)
-- [ ] 2 aprobaciones, o revisor único con autorrevisión e issue de prueba posterior (GOVERNANCE.md, regla 4)

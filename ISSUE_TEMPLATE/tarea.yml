@@ -45,7 +45,7 @@ body:
     id: safety
     attributes:
       label: ¿Es safety-critical?
-      description: Driver, protocolo, frenos/dirección del ADC o paro de emergencia. Requiere 2 aprobaciones y evidencia de banco.
+      description: Driver, protocolo, lazo de control y navegación del ADC, frenos/dirección o paro de emergencia. Requiere sesión de banco o un issue de prueba posterior (prueba-pendiente).
       options:
         - "No"
         - "Sí"
