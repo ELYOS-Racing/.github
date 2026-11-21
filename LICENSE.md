@@ -1,4 +1,4 @@
-Required Notice: Copyright (c) 2026 Luis Xavier García Pimentel Ascencio (https://github.com/luisxavierxd) y Silca Elyos Racing (https://github.com/ELYOS-Racing)
+Required Notice: Copyright (c) 2026 Luis Xavier García Pimentel Ascencio (https://github.com/luisxavierxd) y Elyos Racing Team (https://github.com/ELYOS-Racing)
 
 # PolyForm Strict License 1.0.0
 

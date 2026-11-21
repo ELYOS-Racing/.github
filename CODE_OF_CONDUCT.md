@@ -1,6 +1,6 @@
 # Código de conducta
 
-Silca Elyos Racing adopta el [Contributor Covenant 2.1](https://www.contributor-covenant.org/es/version/2/1/code_of_conduct/) (versión en español) para todos sus repos, issues, PRs, canales y eventos del equipo.
+Elyos Racing Team adopta el [Contributor Covenant 2.1](https://www.contributor-covenant.org/es/version/2/1/code_of_conduct/) (versión en español) para todos sus repos, issues, PRs, canales y eventos del equipo.
 
 ## En resumen
 
