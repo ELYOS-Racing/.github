@@ -53,7 +53,7 @@ Reglas de la organización [`ELYOS-Racing`](https://github.com/ELYOS-Racing). Ap
 
 - Las contribuciones quedan bajo la licencia del repo (PolyForm Strict 1.0.0 salvo excepciones documentadas en su `NOTICE.md`).
 - El DCO (`git commit -s`) certifica el derecho a aportar el código.
-- Titular por confirmar con la Oficina de Transferencia de Tecnología del Tec.
+- Titulares: Luis Xavier García Pimentel Ascencio y Silca Elyos Racing (ver el `Required Notice` de cada `LICENSE.md`).
 
 ## 9. Secretos
 
