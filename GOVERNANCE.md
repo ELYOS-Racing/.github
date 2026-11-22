@@ -35,8 +35,9 @@ Reglas de la organización [`ELYOS-Racing`](https://github.com/ELYOS-Racing). Ap
 
   | Área | Contribuidores calificados | Desde |
   |---|---|---|
-  | Firmware (`fw-*`, protocolo) | `luisxavierxd` (líder) | 21-nov-2026 |
-  | ADC (lazo de control y navegación) | `luisxavierxd` | 21-nov-2026 |
+  | Control: driver (`fw-motor-driver`) y protocolo (`fw-protocol`) | `luisxavierxd` (líder) | 21-nov-2026 |
+  | ADC (`adc-stack`: lazo de control, navegación, planeación) | `luisxavierxd` (líder) | 21-nov-2026 |
+  | Telemetría (`fw-telemetry`, `sw-dashboard`, `sw-strategy`) | Líder de área (por nombrar); interino: `luisxavierxd` | 21-nov-2026 |
   | Electrónica | Líder de área (por nombrar) | — |
   | Mecánica | Líder de área (por nombrar) | — |
   | Datos, análisis y dashboards | Líder de área (por nombrar) | — |
