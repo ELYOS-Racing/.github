@@ -6,7 +6,7 @@
 
 | Season | Event | Result |
 |---|---|---|
-| 2026 | Shell Eco-marathon United States, Indianapolis | **6th place** · ~310 km/kWh |
+| 2026 | Shell Eco-marathon United States, Indianapolis | **6th place** · 336 km/kWh |
 | 2025 | Shell Eco-marathon Americas | **4th place** |
 | 2024 | Shell Eco-marathon Americas, Indianapolis | **4th place in the Americas** · lightest car of the competition (30 kg) |
 | 2023 | Shell Eco-marathon Brazil, Rio de Janeiro | **6th place** · 235 km/kWh, most efficient Mexican car on record |
