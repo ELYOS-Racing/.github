@@ -30,7 +30,7 @@ Reglas de la organización [`ELYOS-Racing`](https://github.com/ELYOS-Racing). Ap
 - **Todo entra por PR** (nada de push directo a `main`) y con **CI en verde**.
 - **Contribuidor calificado.** Cada área (firmware, electrónica, mecánica, ADC) tiene contribuidores calificados: el líder del área lo es siempre y puede declarar a otros. Un calificado **puede hacer merge de su propio PR** si la descripción dice **qué cambia y cómo se probó**.
 - **Quien no es calificado** necesita la aprobación de un calificado de su área. Así se forma a la gente nueva.
-- **`safety-critical`** (driver, protocolo, lazo de control y navegación del ADC, frenos/dirección, paro de emergencia): además, **sesión de banco enlazada** o un **issue de prueba posterior** (`type:test`, etiqueta `prueba-pendiente`) enlazado al PR, que se cierra con su sesión antes del siguiente gate o release.
+- **`safety-critical`** (driver, protocolo, lazo de control y navegación del ADC, frenos/dirección, paro de emergencia): además, **sesión de banco enlazada** o un **issue de prueba posterior** (`type:test`, etiqueta `test-pending`) enlazado al PR, que se cierra con su sesión antes del siguiente gate o release.
 - Los profesores son asesores: se les informa, no son aprobadores técnicos.
 
   | Área | Contribuidores calificados | Desde |
@@ -44,7 +44,7 @@ Reglas de la organización [`ELYOS-Racing`](https://github.com/ELYOS-Racing). Ap
   Un calificado nuevo se declara por PR a esta tabla, aprobado por el líder del área. Cuando la org tenga GitHub Team, cada área tendrá un team `<área>-calificados` en la lista de bypass de los rulesets. La concentración de conocimiento en pocas personas es un riesgo registrado en `sys-integration` (bus factor): se mitiga formando gente, no con más aprobaciones.
 - Las ramas se borran al hacer merge.
 - **Override de owners.** Los owners pueden hacer merge con bypass de reglas (sin las aprobaciones requeridas) en cambios de **estructura, migración o mantenimiento de la org**: plantillas, licencias, CI, configuración, renombres y documentación de organización. Nunca en cambios de lógica `safety-critical`. El PR dice que se usó el override y por qué.
-- Docs en español; identificadores de código en inglés.
+- Idioma: regla 11.
 - Detalle del flujo en [`CONTRIBUTING.md`](CONTRIBUTING.md).
 
 ## 5. Repos
@@ -79,6 +79,15 @@ Reglas de la organización [`ELYOS-Racing`](https://github.com/ELYOS-Racing). Ap
 
 PR a `.github/GOVERNANCE.md` con la aprobación de 2 owners.
 
-## 11. Dependencias ADC ↔ prototipo en un solo sentido
+## 11. Idioma: un idioma por artefacto, según quién lo lee
+
+- **Español** (lo lee el equipo): README, `docs/`, onboarding, ADRs, sesiones de prueba, traspasos, issues, PRs, commits, plantillas y comentarios en el código. El `CHANGELOG.md` interno también.
+- **Inglés** (lo lee alguien de fuera): perfil público de la org (`.github/profile/README.md`), notas de release, manifiestos de competencia y documentos que salen del equipo (reportes técnicos para Shell, propuestas a patrocinadores, postulaciones a premios). También el README y el «About» de cualquier repo público.
+- **Inglés siempre:** identificadores, nombres de repos, ramas, etiquetas y tags.
+- No se traduce la documentación interna (dos versiones = una desactualizada). Notas de release: borrador en inglés generado desde los PRs mergeados, revisado por una persona antes de publicar.
+- ICDs en español, con los nombres de señales, mensajes y unidades exactamente como en el código.
+- Si un repo se vuelve público, se le agrega un README en inglés en ese momento.
+
+## 12. Dependencias ADC ↔ prototipo en un solo sentido
 
 Los issues de `adc-stack` pueden estar bloqueados por issues del prototipo (por ejemplo, de `fw-protocol`). **Ningún issue del prototipo puede depender del ADC**: el autónomo nunca retrasa al coche de competencia.
