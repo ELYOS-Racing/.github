@@ -21,6 +21,6 @@ Closes #
 <!-- Marca solo si el PR toca driver, protocolo, lazo de control o navegación del ADC, frenos/dirección o paro de emergencia. Si no, borra esta sección. -->
 
 - [ ] Etiqueta `safety-critical` puesta
-- [ ] Sesión de prueba de banco enlazada (`sys-integration/tests/AAAA-MM-DD-tema.md`) o issue de prueba posterior (`prueba-pendiente`)
+- [ ] Sesión de prueba de banco enlazada (`sys-integration/tests/AAAA-MM-DD-tema.md`) o issue de prueba posterior (`test-pending`)
 - [ ] Reglas de banco respetadas (sin potencia al grabar firmware que activa el PWM; pruebas sin motor solo con USB)
 - [ ] Plan de reversión: release o rama a la que se vuelve si falla

@@ -27,7 +27,7 @@ Guía general para todos los repos de [`ELYOS-Racing`](https://github.com/ELYOS-
 4. **PR.** Llena la plantilla (qué cambia y cómo se probó), enlaza el issue (`Closes #42`) y espera CI en verde.
    - Si eres **contribuidor calificado** de tu área, puedes hacer merge de tu propio PR.
    - Si no, pide la aprobación de un calificado de tu área.
-   - `safety-critical`: enlaza la sesión de banco o abre un issue `prueba-pendiente`.
+   - `safety-critical`: enlaza la sesión de banco o abre un issue `test-pending`.
 5. **Merge.** La rama se borra.
 
 ## Bloqueos entre áreas
@@ -42,7 +42,7 @@ Si tu issue espera a otro (de tu repo o de otra área), márcalo en el issue que
 | `type:` | `feature`, `fix`, `refactor`, `review`, `test` | Qué clase de trabajo es |
 | `prio:` | `p0` (ya) · `p1` (próximo hito) · `p2` · `p3` | Urgencia |
 | `vehicle:` | `proto`, `adc` | A qué vehículo aplica |
-| Especiales | `safety-critical`, `good-first-issue`, `ruta-crítica`, `opcional` | — |
+| Especiales | `safety-critical`, `good-first-issue`, `critical-path`, `optional` | — |
 
 ## Pruebas
 
