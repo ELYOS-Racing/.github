@@ -1,23 +1,21 @@
 # .github
 
-Archivos comunes de la organización [`ELYOS-Racing`](https://github.com/ELYOS-Racing). **Repo público**: solo contiene plantillas y reglas, nunca código ni secretos.
+Shared files for the [`ELYOS-Racing`](https://github.com/ELYOS-Racing) organization. **Public repo:** it only holds templates and rules, never code or secrets. The team's internal documents are written in Spanish.
 
-| Archivo | Qué es |
+| File | What it is |
 |---|---|
-| [`profile/README.md`](profile/README.md) | Página pública de la org |
-| [`GOVERNANCE.md`](GOVERNANCE.md) | Roles, decisiones, acceso, contribuciones, releases, traspasos |
-| [`CONTRIBUTING.md`](CONTRIBUTING.md) | Flujo issue → rama → PR, commits, etiquetas |
-| [`SECURITY.md`](SECURITY.md) | Reportar vulnerabilidades y secretos filtrados |
-| [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md) | Contributor Covenant 2.1 |
-| [`pull_request_template.md`](pull_request_template.md) | Plantilla de PR con checklist `safety-critical` |
-| [`ISSUE_TEMPLATE/`](ISSUE_TEMPLATE/) | Formularios de tarea, bug, riesgo y solicitud de cambio (PMBOK 8); tarea y bug con desplegable de área |
-| [`.github/workflows/area-label.yml`](.github/workflows/area-label.yml) | Workflow reutilizable que etiqueta `area:*` y `safety-critical` desde los formularios |
-| [`workflow-templates/`](workflow-templates/) | Plantilla para activar ese workflow en cada repo (Actions → New workflow) |
+| [`profile/README.md`](profile/README.md) | Public organization page |
+| [`GOVERNANCE.md`](GOVERNANCE.md) | Roles, decisions, access, contributions, releases, handovers (Spanish) |
+| [`CONTRIBUTING.md`](CONTRIBUTING.md) | Issue → branch → PR flow, commits, labels (Spanish) |
+| [`SECURITY.md`](SECURITY.md) | Reporting vulnerabilities and leaked secrets (Spanish) |
+| [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md) | Contributor Covenant 2.1 (Spanish) |
+| [`pull_request_template.md`](pull_request_template.md) | PR template with a safety-critical checklist |
+| [`ISSUE_TEMPLATE/`](ISSUE_TEMPLATE/) | Task, bug, risk and change-request forms |
+| [`.github/workflows/area-label.yml`](.github/workflows/area-label.yml) | Reusable workflow that applies `area:*` and `safety-critical` labels from the forms |
+| [`workflow-templates/`](workflow-templates/) | Template to enable that workflow in each repo |
 
-GitHub usa estos archivos en cualquier repo de la org que no tenga los suyos. La guía «Empieza aquí» para miembros está en `.github-private` (solo la ven los miembros).
+GitHub uses these files in every organization repo that does not define its own. The members-only "Start here" guide lives in `.github-private`.
 
-Cambiar `GOVERNANCE.md` requiere 2 owners; el resto, 1 aprobación.
+## License
 
-## Licencia
-
-[PolyForm Strict 1.0.0](LICENSE.md) © 2026 Luis Xavier García Pimentel Ascencio y Elyos Racing Team.
+[PolyForm Strict 1.0.0](LICENSE.md) © 2026 Luis Xavier García Pimentel Ascencio and Elyos Racing Team.

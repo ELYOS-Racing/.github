@@ -6,9 +6,10 @@ Reglas de la organización [`ELYOS-Racing`](https://github.com/ELYOS-Racing). Ap
 
 | Rol | Quién | Qué puede hacer |
 |---|---|---|
-| Owner | Profesor asesor (permanente) y 1–2 líderes | Administra la org; aprueba repos nuevos, gastos y servicios con costo; desempata |
-| Líder de área | Un maintainer por área (team `leads`) | Decide dentro de su área; revisa y aprueba PRs; mantiene su Project |
-| Contribuidor | Integrante del team de su área | Escribe en los repos de su team, siempre por PR |
+| Owner | Profesor asesor (permanente) y 1–2 líderes | Administra la org; aprueba repos nuevos, gastos y servicios con costo; desempata; override en cambios de estructura (regla 4). Los profesores son asesores, no aprobadores técnicos |
+| Líder de área | Un maintainer por área (team `leads`) | Decide dentro de su área; es contribuidor calificado; declara a otros calificados; mantiene su Project |
+| Contribuidor calificado | El líder de cada área, más quien él declare en la tabla de la regla 4 | Puede hacer merge de su propio PR con CI en verde y descripción de qué cambia y cómo se probó; aprueba los PRs de los contribuidores de su área |
+| Contribuidor | Integrante del team de su área | Escribe en los repos de su team, siempre por PR; su PR lo aprueba un contribuidor calificado del área |
 | Alumni / externo | Team `alumni`, outside collaborators | Solo lectura en repos puntuales |
 
 ## 2. Decisiones
