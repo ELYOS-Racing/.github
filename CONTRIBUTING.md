@@ -25,8 +25,8 @@ Guía general para todos los repos de [`ELYOS-Racing`](https://github.com/ELYOS-
    ```
 
 4. **PR.** Llena la plantilla (qué cambia y cómo se probó), enlaza el issue (`Closes #42`) y espera CI en verde.
-   - Si eres **contribuidor calificado** de tu área, puedes hacer merge de tu propio PR.
-   - Si no, pide la aprobación de un calificado de tu área.
+   - Lo aprueba un **code owner** de los archivos que toca (GitHub lo pide solo). Nadie aprueba su propio PR.
+   - Si eres el **líder** del área o **contribuidor calificado** de ese repo (regla 4 de la gobernanza), puedes mergear tu propio PR sin esperar aprobación.
    - `safety-critical`: enlaza la sesión de banco o abre un issue `test-pending`.
 5. **Merge.** La rama se borra.
 
