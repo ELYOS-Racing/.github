@@ -1,0 +1,84 @@
+# Workflow reutilizable: qué áreas del repo cambió el PR o el push, para no correr jobs pesados en vano.
+#
+# Uso en un repo (ver workflow-templates/ci-changes.yml):
+#
+#   changes:
+#     uses: ELYOS-Racing/.github/.github/workflows/changes.yml@main
+#     with:
+#       filters: |
+#         firmware: ^teensyduino_freertos/
+#         python: ^(tools/|pyproject\.toml)
+#
+#   build:
+#     needs: changes
+#     if: fromJSON(needs.changes.outputs.areas).firmware
+#
+# Reglas:
+#   - `filters`: una línea por área, `nombre: regex` (grep -E sobre la ruta de cada archivo cambiado).
+#   - `ignore`: regex de archivos que no disparan nada (por omisión, documentación: *.md, README, LICENSE, docs/).
+#     Se aplica antes de los filtros.
+#   - Un cambio en .github/workflows/ marca todas las áreas: el CI cambió y hay que probarlo completo.
+#   - push de un tag, workflow_dispatch, release o sin commit anterior: todas las áreas en true.
+#   - El job final `ci-ok` de cada repo (siempre corre) es el único check obligatorio: acepta jobs en success o skipped.
+name: Áreas cambiadas
+
+on:
+  workflow_call:
+    inputs:
+      filters:
+        description: "Una línea por área: `nombre: regex`"
+        type: string
+        required: true
+      ignore:
+        description: "Regex de archivos que no disparan ningún área"
+        type: string
+        required: false
+        default: '(\.md$|(^|/)README$|(^|/)LICENSE[^/]*$|(^|/)NOTICE$|^docs/|(^|/)\.gitignore$)'
+    outputs:
+      areas:
+        description: 'JSON {"area": true|false, ...}'
+        value: ${{ jobs.changes.outputs.areas }}
+
+jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      areas: ${{ steps.f.outputs.areas }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - id: f
+        env:
+          EVENT: ${{ github.event_name }}
+          REF_TYPE: ${{ github.ref_type }}
+          BASE: ${{ github.event.pull_request.base.sha }}
+          BEFORE: ${{ github.event.before }}
+          FILTERS: ${{ inputs.filters }}
+          IGNORE: ${{ inputs.ignore }}
+        run: |
+          set -euo pipefail
+          all=false
+          if [ "$EVENT" = pull_request ] || [ "$EVENT" = pull_request_target ]; then
+            files=$(git diff --name-only "$BASE"...HEAD)
+          elif [ "$EVENT" = push ] && [ "$REF_TYPE" = branch ] && [ -n "$BEFORE" ] && ! [[ "$BEFORE" =~ ^0+$ ]] \
+               && git cat-file -e "$BEFORE^{commit}" 2>/dev/null; then
+            files=$(git diff --name-only "$BEFORE" HEAD)
+          else
+            all=true; files=""
+          fi
+          printf 'Archivos cambiados:\n%s\n' "${files:-(todos: $EVENT)}"
+          if printf '%s\n' "$files" | grep -q '^\.github/workflows/'; then all=true; fi
+          relevant=$(printf '%s\n' "$files" | grep -vE "$IGNORE" | grep -v '^$' || true)
+          json="{"
+          while IFS= read -r line; do
+            [ -z "${line// }" ] && continue
+            name=$(printf '%s' "${line%%:*}" | tr -d ' ')
+            regex=$(printf '%s' "${line#*:}" | sed 's/^ *//')
+            if [ "$all" = true ] || printf '%s\n' "$relevant" | grep -qE "$regex"; then hit=true; else hit=false; fi
+            echo "  $name ($regex): $hit"
+            json="$json\"$name\":$hit,"
+          done <<< "$FILTERS"
+          json="${json%,}}"
+          echo "areas=$json" >> "$GITHUB_OUTPUT"
+          echo "### Áreas: $json" >> "$GITHUB_STEP_SUMMARY"
