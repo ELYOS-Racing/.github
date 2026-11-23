@@ -48,6 +48,8 @@ Si tu issue espera a otro (de tu repo o de otra área), márcalo en el issue que
 
 Todo PR con lógica nueva trae su prueba; el CI en verde es requisito de merge. La lógica que no depende del hardware va en `lib/` para que compile en el entorno `native` de PlatformIO.
 
+**El CI solo corre lo que el PR toca.** Cada repo declara sus áreas en el job `changes` (workflow reutilizable [`changes.yml`](.github/workflows/changes.yml)): un PR que solo cambia documentación (`*.md`, `README`, `LICENSE`, `docs/`) no compila firmware ni corre pruebas pesadas, y gitleaks corre siempre. El check obligatorio de cada repo es **`ci-ok`**: pasa si cada job pasó o se saltó porque su área no cambió. Si tocas `.github/workflows/`, corre todo.
+
 ## Herramientas
 
 - **Firmware:** PlatformIO (VS Code). En Windows, clona en una ruta corta (por ejemplo `C:\w\`): las rutas largas rompen la compilación.
