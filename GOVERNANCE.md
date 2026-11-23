@@ -6,11 +6,13 @@ Reglas de la organización [`ELYOS-Racing`](https://github.com/ELYOS-Racing). Ap
 
 | Rol | Quién | Qué puede hacer |
 |---|---|---|
-| Owner | Profesor asesor (permanente) y 1–4 líderes | Administra la org; aprueba repos nuevos, gastos y servicios con costo; desempata; override en cambios de estructura (regla 4). Los profesores son asesores, no aprobadores técnicos |
-| Líder de área | Uno por área: Write en todos los repos (team `leads`) y Maintain en los de su área (team `<area>-leads`) | Decide dentro de su área; es contribuidor calificado; declara a otros calificados; mantiene su Project |
-| Contribuidor calificado | El líder de cada área (en todos sus repos), más quien él declare para un repo en la tabla de la regla 4 | Puede hacer merge de su propio PR con CI en verde y descripción de qué cambia y cómo se probó; aprueba los PRs de los contribuidores de su área |
-| Contribuidor | Integrante del team de su área | Escribe en los repos de su team, siempre por PR; su PR lo aprueba un contribuidor calificado del área |
+| Owner | El profesor asesor (permanente) y de 1 a 4 líderes | Administra la org: repos nuevos, gastos, servicios con costo y desempates. Puede usar el override de la regla 4 |
+| Líder de área | Uno por área (tabla de la regla 4) | Decide dentro de su área, aprueba y mergea en los repos de su área, declara calificados y mantiene el Project del área |
+| Contribuidor calificado | Quien el líder declare para un repo (tabla de la regla 4) | Mergea su propio PR en ese repo y aprueba los PR de otros en él |
+| Contribuidor | Integrante del team de su área | Escribe en los repos de su área, siempre por PR |
 | Alumni / externo | Team `alumni`, outside collaborators | Solo lectura en repos puntuales |
+
+Los profesores asesoran: se les informa, pero no aprueban código.
 
 ## 2. Decisiones
 
@@ -27,33 +29,59 @@ Reglas de la organización [`ELYOS-Racing`](https://github.com/ELYOS-Racing). Ap
 
 ## 4. Contribuciones
 
-- **Todo entra por PR** (nada de push directo a `main`) y con **CI en verde**.
-- **Contribuidor calificado.** Cada área (control, ADC, telemetría, electrónica, mecánica) tiene contribuidores calificados: el líder del área lo es siempre y puede declarar a otros. Un calificado **puede hacer merge de su propio PR** si la descripción dice **qué cambia y cómo se probó**.
-- **Quien no es calificado** necesita la aprobación de un calificado de su área. Así se forma a la gente nueva.
-- **`safety-critical`** (driver, protocolo, lazo de control y navegación del ADC, frenos/dirección, paro de emergencia): además, **sesión de banco enlazada** o un **issue de prueba posterior** (`type:test`, etiqueta `test-pending`) enlazado al PR, que se cierra con su sesión antes del siguiente gate o release.
-- Los profesores son asesores: se les informa, no son aprobadores técnicos.
+### Cómo entra un cambio
 
-  | Área | Repos | Líder |
-  |---|---|---|
-  | Control | `fw-motor-driver`, `fw-protocol` | `luisxavierxd` (desde 21-nov-2026) |
-  | ADC | `adc-stack`, `fw-protocol` | `luisxavierxd` (desde 21-nov-2026) |
-  | Telemetría | `fw-telemetry`, `sw-dashboard`, `sw-strategy`, `fw-protocol` | Por nombrar; interino: `luisxavierxd` |
-  | Electrónica | `hw-electronics` | Por nombrar |
-  | Mecánica | `mech-cad` | Por nombrar |
-
-  `fw-protocol` es el contrato entre placas: es de control, ADC y telemetría, y lo lideran los tres.
-
-  **Calificados por repo** (además de los líderes de su área):
-
-  | Repo | Contribuidores calificados | Desde |
-  |---|---|---|
-  | — | Ninguno todavía | — |
-
-  Un calificado se declara **por repo**, por PR a esta tabla, aprobado por el líder del área: ser confiable en un repo no lo hace confiable en los demás de su área. Con GitHub Team, el bypass de los rulesets de revisión (siempre solo en PR y nunca sobre el CI) va así: cada **líder**, en el team `<area>-leads`, en todos los repos de su área; cada **calificado**, en el team `<repo>-qualified`, solo en ese repo (el team se crea con el primer calificado). En todos los repos, solo los owners (override, más abajo) y el team `merge-bypass`, que es para cuentas de automatización. Los profesores no van en ninguno. Detalle en [`sys-integration/docs/MIGRACION_GITHUB_TEAM.md`](https://github.com/ELYOS-Racing/sys-integration/blob/main/docs/MIGRACION_GITHUB_TEAM.md). La concentración de conocimiento en pocas personas es un riesgo registrado en `sys-integration` (bus factor): se mitiga formando gente, no con más aprobaciones.
+- **Todo entra por PR, con el CI en verde.** Nadie empuja directo a `main`.
+- **Cada PR lo aprueba otra persona:** un code owner de los archivos que toca. Nadie aprueba su propio PR.
+- **Mergear el propio PR sin esperar aprobación** solo lo pueden hacer el líder, en los repos de su área, y el contribuidor calificado, en el repo para el que lo declararon. En los dos casos, la descripción del PR dice **qué cambia y cómo se probó**.
+- **`safety-critical`** (driver, protocolo, lazo de control y navegación del ADC, frenos, dirección y paro de emergencia): además, el PR enlaza una **sesión de banco** o un **issue de prueba posterior** (`type:test`, etiqueta `test-pending`), que se cierra con su sesión antes del siguiente gate o release.
 - Las ramas se borran al hacer merge.
-- **Override de owners.** Los owners pueden hacer merge con bypass de reglas (sin las aprobaciones requeridas) en cambios de **estructura, migración o mantenimiento de la org**: plantillas, licencias, CI, configuración, renombres y documentación de organización. Nunca en cambios de lógica `safety-critical`. El PR dice que se usó el override y por qué. Con GitHub Team se implementa como bypass de los owners (`OrganizationAdmin`) en los rulesets de revisión, solo en PR y nunca sobre el CI.
-- Idioma: regla 11.
-- Detalle del flujo en [`CONTRIBUTING.md`](CONTRIBUTING.md).
+
+### Líderes y calificados
+
+| Área | Repos | Líder |
+|---|---|---|
+| Control | `fw-motor-driver`, `fw-protocol` | `luisxavierxd` (desde 21-nov-2026) |
+| ADC | `adc-stack`, `fw-protocol` | `luisxavierxd` (desde 21-nov-2026) |
+| Telemetría | `fw-telemetry`, `sw-dashboard`, `sw-strategy`, `fw-protocol` | Por nombrar; interino: `luisxavierxd` |
+| Electrónica | `hw-electronics` | Por nombrar |
+| Mecánica | `mech-cad` | Por nombrar |
+
+`fw-protocol` es el contrato entre placas, así que pertenece a tres áreas y lo lideran sus tres líderes.
+
+En **electrónica y mecánica**, el líder en GitHub no es necesariamente el líder técnico del área:
+
+- El **líder técnico** decide el diseño (qué placa, qué pieza), aunque no trabaje en GitHub.
+- El **líder de GitHub** es quien digitaliza: KiCad, BOM, numeración de piezas y releases. Es quien va en `electronics-leads` o `mechanical-leads`, aprueba los PR y mergea. Revisa que lo digitalizado cumpla las reglas del repo (DRC, BOM, numeración).
+- Cuando un PR cambia el diseño, el issue o el PR registra la aprobación del líder técnico (por ejemplo: «aprobado por <líder técnico> en la reunión del 3-dic»).
+
+Los contribuidores calificados se declaran **por repo**: que alguien sea confiable en la web no lo hace confiable en el firmware de la misma área. Se agregan por PR a esta tabla, aprobado por el líder del área.
+
+| Repo | Contribuidores calificados | Desde |
+|---|---|---|
+| — | Ninguno todavía | — |
+
+Que pocas personas concentren el conocimiento es un riesgo registrado en `sys-integration` (bus factor). Se mitiga formando gente, no agregando aprobaciones.
+
+### Override de owners
+
+Los owners pueden mergear sin las aprobaciones requeridas en cambios de **estructura, migración o mantenimiento de la org**: plantillas, licencias, CI, configuración, renombres y documentación de organización. **Nunca** en lógica `safety-critical`. El PR dice que se usó el override y por qué.
+
+### Cómo se aplica en GitHub (plan Team)
+
+| Quién | Team | Permiso | Se salta la revisión en |
+|---|---|---|---|
+| Líder de área | `leads` y `<area>-leads` | Write en todos los repos; Maintain en los de su área | Los repos de su área |
+| Contribuidor calificado | `<repo>-qualified` (se crea con el primer calificado del repo) | El de su team de área | Ese repo |
+| Contribuidor | Su team de área (`fw`, `hw`, `mech`, `adc`, `ops`) | Write en los repos de su área | — |
+| Owner | — | Admin | Todos (es el override) |
+| Cuenta de automatización | `merge-bypass` | — | Todos |
+
+- Saltarse la revisión solo funciona dentro de un PR, y el CI (`ci-ok`) no se lo salta nadie.
+- Los profesores no están en ningún team que se salte la revisión.
+- Detalle y script en [`sys-integration/docs/MIGRACION_GITHUB_TEAM.md`](https://github.com/ELYOS-Racing/sys-integration/blob/main/docs/MIGRACION_GITHUB_TEAM.md).
+
+Idioma: regla 11. Detalle del flujo en [`CONTRIBUTING.md`](CONTRIBUTING.md).
 
 ## 5. Repos
 
