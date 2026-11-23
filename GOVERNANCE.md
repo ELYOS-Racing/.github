@@ -49,6 +49,12 @@ Los profesores asesoran: se les informa, pero no aprueban código.
 
 `fw-protocol` es el contrato entre placas, así que pertenece a tres áreas y lo lideran sus tres líderes.
 
+En **electrónica y mecánica**, el líder en GitHub no es necesariamente el líder técnico del área:
+
+- El **líder técnico** decide el diseño (qué placa, qué pieza), aunque no trabaje en GitHub.
+- El **líder de GitHub** es quien digitaliza: KiCad, BOM, numeración de piezas y releases. Es quien va en `electronics-leads` o `mechanical-leads`, aprueba los PR y mergea. Revisa que lo digitalizado cumpla las reglas del repo (DRC, BOM, numeración).
+- Cuando un PR cambia el diseño, el issue o el PR registra la aprobación del líder técnico (por ejemplo: «aprobado por <líder técnico> en la reunión del 3-dic»).
+
 Los contribuidores calificados se declaran **por repo**: que alguien sea confiable en la web no lo hace confiable en el firmware de la misma área. Se agregan por PR a esta tabla, aprobado por el líder del área.
 
 | Repo | Contribuidores calificados | Desde |
