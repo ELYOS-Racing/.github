@@ -6,7 +6,7 @@ Reglas de la organización [`ELYOS-Racing`](https://github.com/ELYOS-Racing). Ap
 
 | Rol | Quién | Qué puede hacer |
 |---|---|---|
-| Owner | Hasta 4: el profesor asesor (permanente), líderes de área y la cuenta de automatización | Administra la org: repos nuevos, gastos, servicios con costo y desempates. Puede usar el override de la regla 4 |
+| Owner | El profesor asesor (permanente) y de 1 a 4 líderes | Administra la org: repos nuevos, gastos, servicios con costo y desempates. Puede usar el override de la regla 4 |
 | Líder de área | Uno por área (tabla de la regla 4) | Decide dentro de su área, aprueba y mergea en los repos de su área, declara calificados y mantiene el Project del área |
 | Contribuidor calificado | Quien el líder declare para un repo (tabla de la regla 4) | Mergea su propio PR en ese repo y aprueba los PR de otros en él |
 | Contribuidor | Integrante del team de su área | Escribe en los repos de su área, siempre por PR |
