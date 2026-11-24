@@ -39,6 +39,11 @@ on:
         type: string
         required: false
         default: '(\.md$|(^|/)README$|(^|/)LICENSE[^/]*$|(^|/)NOTICE$|^docs/|(^|/)\.gitignore$)'
+      selector:
+        description: "Dónde corre este job (ubuntu-latest; `orin` solo para probar el runner sin minutos de GitHub)"
+        type: string
+        required: false
+        default: ubuntu-latest
     outputs:
       areas:
         description: 'JSON {"area": true|false, ...}'
@@ -54,7 +59,7 @@ on:
 
 jobs:
   changes:
-    runs-on: ubuntu-latest
+    runs-on: ${{ inputs.selector }}
     outputs:
       areas: ${{ steps.f.outputs.areas }}
       runner: ${{ steps.runner.outputs.runner }}
