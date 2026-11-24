@@ -24,6 +24,17 @@ Guía general para todos los repos de [`ELYOS-Racing`](https://github.com/ELYOS-
    driver: sincroniza lectura de corriente con PWM
    ```
 
+   **Autoría** (regla 8 de la gobernanza; el check `autoria` del CI la revisa):
+   - Sin `Co-authored-by` de herramientas de IA ni de gente de fuera del PR. Usar IA está bien, pero no se acredita: si tu herramienta agrega esa línea sola, desactívala en su configuración de atribución.
+   - En la web de GitHub, la firma se agrega sola (la org lo exige). En **GitHub Desktop** no hay opción: escribe `Signed-off-by: Tu Nombre <tu-correo>` como última línea de la descripción del commit, con el mismo correo de tu cuenta.
+   - Si el check falla, corrige los commits de tu rama y vuelve a subirla:
+
+     ```bash
+     git rebase --signoff origin/main            # agrega la firma que falte
+     git rebase -i origin/main                   # «reword» para quitar un Co-authored-by
+     git push --force-with-lease
+     ```
+
 4. **PR.** Llena la plantilla (qué cambia y cómo se probó), enlaza el issue (`Closes #42`) y espera CI en verde.
    - Lo aprueba un **code owner** de los archivos que toca (GitHub lo pide solo). Nadie aprueba su propio PR.
    - Si eres el **líder** del área o **contribuidor calificado** de ese repo (regla 4 de la gobernanza), puedes mergear tu propio PR sin esperar aprobación.

@@ -102,7 +102,10 @@ Idioma: regla 11. Detalle del flujo en [`CONTRIBUTING.md`](CONTRIBUTING.md).
 ## 8. Propiedad intelectual
 
 - Las contribuciones quedan bajo la licencia del repo (PolyForm Strict 1.0.0 salvo excepciones documentadas en su `NOTICE.md`).
-- El DCO (`git commit -s`) certifica el derecho a aportar el código.
+- El DCO (`git commit -s`) certifica el derecho a aportar el código. Todo commit que entra por PR lo lleva, con el correo de su autor.
+- **Autores y coautores de un commit** (`Co-authored-by`) solo pueden ser personas que firman el DCO en ese mismo PR. Quien no es de la org y quiere aportar entra como colaborador externo y hace sus propios commits firmados; no se le acredita en los commits de otro.
+- **Las herramientas de IA no se acreditan como coautoras.** Se pueden usar; quien firma el commit responde por el código como si lo hubiera escrito.
+- El check `autoria` (en `ci-ok` de cada repo) revisa las tres cosas en cada PR.
 - Titulares: Luis Xavier García Pimentel Ascencio y Elyos Racing Team (ver el `Required Notice` de cada `LICENSE.md`).
 
 ## 9. Secretos
