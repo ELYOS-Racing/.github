@@ -3,8 +3,11 @@
 # Uso en un repo (el job entra en los `needs` de `ci-ok`):
 #
 #   autoria:
+#     needs: changes
 #     if: github.event_name == 'pull_request'
 #     uses: ELYOS-Racing/.github/.github/workflows/autoria.yml@main
+#     with:
+#       runner: ${{ needs.changes.outputs.runner }}
 #
 # Falla si algún commit del PR (sin contar merges ni bots):
 #   1. no trae `Signed-off-by` (DCO) con el correo de su autor o de quien lo commiteó;
@@ -16,6 +19,12 @@ name: Autoría
 
 on:
   workflow_call:
+    inputs:
+      runner:
+        description: "Dónde corre (la salida `runner` de changes.yml)"
+        type: string
+        required: false
+        default: ubuntu-latest
 
 permissions:
   contents: read
@@ -23,7 +32,7 @@ permissions:
 jobs:
   autoria:
     name: dco y coautoría
-    runs-on: ubuntu-latest
+    runs-on: ${{ inputs.runner }}
     steps:
       - uses: actions/checkout@v7
         with:

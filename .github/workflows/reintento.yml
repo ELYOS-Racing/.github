@@ -1,0 +1,62 @@
+# Workflow reutilizable: si el CI falló porque la Orin (runner self-hosted adc-twin-gdl) se apagó o se pausó a la
+# mitad de un job, relanza la corrida completa una sola vez. Al relanzarse, `changes` vuelve a preguntar por la Orin y,
+# si sigue fuera, todo corre en GitHub.
+#
+# Uso en un repo (.github/workflows/reintento.yml):
+#
+#   name: Reintento del CI
+#   on:
+#     workflow_run:
+#       workflows: [CI]
+#       types: [completed]
+#   jobs:
+#     reintento:
+#       if: github.event.workflow_run.conclusion == 'failure' && github.event.workflow_run.run_attempt == 1
+#       permissions:
+#         actions: write
+#         checks: read
+#       uses: ELYOS-Racing/.github/.github/workflows/reintento.yml@main
+#       with:
+#         run_id: ${{ github.event.workflow_run.id }}
+#
+# Un fallo real (una prueba en rojo) no se relanza: solo los jobs de la Orin cuya anotación dice que el runner se
+# perdió o recibió la señal de apagado.
+name: Reintento del CI
+
+on:
+  workflow_call:
+    inputs:
+      run_id:
+        type: number
+        required: true
+
+permissions:
+  actions: write
+  checks: read
+
+jobs:
+  reintento:
+    runs-on: ubuntu-latest
+    steps:
+      - env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          RUN: ${{ inputs.run_id }}
+        run: |
+          set -euo pipefail
+          perdidos=""
+          for id in $(gh api "repos/$REPO/actions/runs/$RUN/jobs?per_page=100" \
+              -q '.jobs[] | select(.conclusion == "failure" or .conclusion == "cancelled")
+                  | select(.runner_name == "adc-twin-gdl" or (.labels | index("orin"))) | .id'); do
+            if gh api "repos/$REPO/check-runs/$id/annotations" -q '.[].message' \
+                | grep -qiE 'lost communication|shutdown signal|runner .*(offline|was deleted|was removed)'; then
+              perdidos="$perdidos $id"
+            fi
+          done
+          if [ -z "$perdidos" ]; then
+            echo "Fallo real (no se perdió la Orin): no se relanza."
+            exit 0
+          fi
+          echo "La Orin se perdió en los jobs$perdidos: se relanza la corrida $RUN completa."
+          gh api -X POST "repos/$REPO/actions/runs/$RUN/rerun"
+          echo "### Relanzada la corrida $RUN: la Orin se perdió a la mitad" >> "$GITHUB_STEP_SUMMARY"
