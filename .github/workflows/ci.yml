@@ -1,0 +1,41 @@
+# CI mínimo de un repo sin código: autoría de los commits (GOVERNANCE, regla 8) y secretos (regla 9).
+# `ci-ok` es el único check obligatorio de la rama, como en el resto de los repos.
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  autoria:
+    if: github.event_name == 'pull_request'
+    uses: ELYOS-Racing/.github/.github/workflows/autoria.yml@main
+
+  gitleaks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: gitleaks
+        run: |
+          curl -sSL https://github.com/gitleaks/gitleaks/releases/download/v8.21.2/gitleaks_8.21.2_linux_x64.tar.gz | tar -xz gitleaks
+          ./gitleaks detect --source . --redact --verbose
+
+  ci-ok:
+    # Único check obligatorio de la rama: pasa si cada job pasó o se saltó.
+    if: always()
+    needs: [autoria, gitleaks]
+    runs-on: ubuntu-latest
+    steps:
+      - env:
+          RESULTS: ${{ join(needs.*.result, ' ') }}
+        run: |
+          echo "Resultados: $RESULTS"
+          for r in $RESULTS; do
+            case "$r" in success|skipped) ;; *) echo "::error::un job terminó en $r"; exit 1 ;; esac
+          done
