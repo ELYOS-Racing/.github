@@ -20,6 +20,11 @@
 #   - Un cambio en .github/workflows/ marca todas las áreas: el CI cambió y hay que probarlo completo.
 #   - push de un tag, workflow_dispatch, release o sin commit anterior: todas las áreas en true.
 #   - El job final `ci-ok` de cada repo (siempre corre) es el único check obligatorio: acepta jobs en success o skipped.
+#   - Salida `runner`: dónde corren los jobs del repo. `orin` si el runner self-hosted de la Orin del gemelo
+#     (adc-twin-gdl) está en línea; `ubuntu-latest` si está apagada, sin red o pausada, si falta el secret de la App
+#     (CI_APP_ID / CI_APP_PRIVATE_KEY, con permiso «Self-hosted runners: Read») o si el repo tiene la variable
+#     CI_RUNNER=github. Úsala con `runs-on: ${{ needs.changes.outputs.runner }}` y llama a este workflow con
+#     `secrets: inherit`. `changes` y `ci-ok` siempre corren en GitHub, para que el CI termine aunque la Orin se caiga.
 name: Áreas cambiadas
 
 on:
@@ -38,12 +43,23 @@ on:
       areas:
         description: 'JSON {"area": true|false, ...}'
         value: ${{ jobs.changes.outputs.areas }}
+      runner:
+        description: "orin | ubuntu-latest"
+        value: ${{ jobs.changes.outputs.runner }}
+    secrets:
+      CI_APP_ID:
+        required: false
+      CI_APP_PRIVATE_KEY:
+        required: false
 
 jobs:
   changes:
     runs-on: ubuntu-latest
     outputs:
       areas: ${{ steps.f.outputs.areas }}
+      runner: ${{ steps.runner.outputs.runner }}
+    env:
+      HAS_APP: ${{ secrets.CI_APP_ID != '' && secrets.CI_APP_PRIVATE_KEY != '' }}
     steps:
       - uses: actions/checkout@v7
         with:
@@ -82,3 +98,28 @@ jobs:
           json="${json%,}}"
           echo "areas=$json" >> "$GITHUB_OUTPUT"
           echo "### Áreas: $json" >> "$GITHUB_STEP_SUMMARY"
+      - id: app
+        if: env.HAS_APP == 'true' && vars.CI_RUNNER != 'github'
+        continue-on-error: true
+        uses: actions/create-github-app-token@v3
+        with:
+          app-id: ${{ secrets.CI_APP_ID }}
+          private-key: ${{ secrets.CI_APP_PRIVATE_KEY }}
+          owner: ELYOS-Racing
+      - id: runner
+        env:
+          TOKEN: ${{ steps.app.outputs.token }}
+        run: |
+          set -uo pipefail
+          runner=ubuntu-latest; motivo="sin token de la App o CI_RUNNER=github"
+          if [ -n "$TOKEN" ]; then
+            estado=$(curl -fsS -H "Authorization: Bearer $TOKEN" -H "Accept: application/vnd.github+json"               "https://api.github.com/orgs/ELYOS-Racing/actions/runners?per_page=100"               | jq -r '[.runners[] | select(.status == "online") | select(any(.labels[]; .name == "orin"))] | length'               2>/dev/null || echo error)
+            case "$estado" in
+              ''|error) motivo="no se pudo consultar a GitHub (¿falta el permiso Self-hosted runners: Read?)" ;;
+              0) motivo="la Orin no está en línea" ;;
+              *) runner=orin; motivo="la Orin está en línea" ;;
+            esac
+          fi
+          echo "runner=$runner" >> "$GITHUB_OUTPUT"
+          echo "### Runner: \`$runner\` ($motivo)" >> "$GITHUB_STEP_SUMMARY"
+          echo "Runner: $runner ($motivo)"
