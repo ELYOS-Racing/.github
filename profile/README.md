@@ -1,5 +1,9 @@
 <p align="center">
-  <img src="assets/banner.png" alt="Elyos Racing Team, with the outline of the Indianapolis Motor Speedway road course" width="100%"/>
+  <img src="assets/banner.svg" alt="Elyos Racing Team. The two 2027 tracks: Indianapolis for the Shell Eco-marathon and Silesia Ring for the Autonomous Driving Challenge" width="100%"/>
+</p>
+
+<p align="center">
+  <img src="https://readme-typing-svg.demolab.com?font=Inter&weight=600&size=20&duration=3000&pause=1200&color=9CC0FF&center=true&vCenter=true&width=720&lines=Designed%2C+built+and+raced+by+students;336+km/kWh+at+Indianapolis+2026;Next+stop%3A+Indianapolis%2C+April+2027;Then%3A+driving+itself+at+Silesia+Ring%2C+June+2027" alt="Designed, built and raced by students"/>
 </p>
 
 <p align="center">
@@ -66,49 +70,65 @@ On the same track, Indianapolis, we went from 302 km/kWh in 2024 to **336 in 202
 
 <table>
   <tr><td><b>Embedded</b></td><td>
-    <img src="https://img.shields.io/badge/C%2FC++-00599C?style=flat-square&logo=cplusplus&logoColor=white" alt="C/C++"/>
-    <img src="https://img.shields.io/badge/Teensy_4.1-2E7D32?style=flat-square&logo=arduino&logoColor=white" alt="Teensy 4.1"/>
+    <img src="https://img.shields.io/badge/C%2FC%2B%2B-00599C?style=flat-square&logo=cplusplus&logoColor=white" alt="C/C++"/>
+    <img src="https://img.shields.io/badge/Teensy_4.1-2E7D32?style=flat-square" alt="Teensy 4.1"/>
     <img src="https://img.shields.io/badge/ESP32-E7352C?style=flat-square&logo=espressif&logoColor=white" alt="ESP32"/>
     <img src="https://img.shields.io/badge/FreeRTOS-5DB34A?style=flat-square" alt="FreeRTOS"/>
-    <img src="https://img.shields.io/badge/PlatformIO-F5822A?style=flat-square&logo=platformio&logoColor=white" alt="PlatformIO"/>
-    <sub>SimpleFOC · ESP-IDF · NXP i.MX RT1062</sub>
+    <img src="https://img.shields.io/badge/PlatformIO-F5822A?style=flat-square&logo=platformio&logoColor=white" alt="PlatformIO"/><br/>
+    <img src="https://img.shields.io/badge/SimpleFOC-1D3C5C?style=flat-square" alt="SimpleFOC"/>
+    <img src="https://img.shields.io/badge/ESP--IDF-1D3C5C?style=flat-square" alt="ESP-IDF"/>
+    <img src="https://img.shields.io/badge/NXP_i.MX_RT1062-1D3C5C?style=flat-square" alt="NXP i.MX RT1062"/>
   </td></tr>
   <tr><td><b>Electronics</b></td><td>
-    <img src="https://img.shields.io/badge/KiCad_10-314CB0?style=flat-square&logo=kicad&logoColor=white" alt="KiCad 10"/>
-    <sub>automated ERC and DRC · INA240 current sensing · CAN</sub>
+    <img src="https://img.shields.io/badge/KiCad_10-314CB0?style=flat-square&logo=kicad&logoColor=white" alt="KiCad 10"/><br/>
+    <img src="https://img.shields.io/badge/automated_ERC_and_DRC-1D3C5C?style=flat-square" alt="automated ERC and DRC"/>
+    <img src="https://img.shields.io/badge/INA240_current_sensing-1D3C5C?style=flat-square" alt="INA240 current sensing"/>
+    <img src="https://img.shields.io/badge/CAN-1D3C5C?style=flat-square" alt="CAN"/>
   </td></tr>
   <tr><td><b>Mechanical</b></td><td>
-    <img src="https://img.shields.io/badge/SolidWorks-E2231A?style=flat-square&logo=dassaultsystemes&logoColor=white" alt="SolidWorks"/>
-    <sub>STEP / DXF releases · a numbered bill of materials checked automatically</sub>
+    <img src="https://img.shields.io/badge/SolidWorks-E2231A?style=flat-square&logo=dassaultsystemes&logoColor=white" alt="SolidWorks"/><br/>
+    <img src="https://img.shields.io/badge/STEP_%2F_DXF_releases-1D3C5C?style=flat-square" alt="STEP / DXF releases"/>
+    <img src="https://img.shields.io/badge/BOM_checked_automatically-1D3C5C?style=flat-square" alt="BOM checked automatically"/>
   </td></tr>
   <tr><td><b>Simulation and optimization</b></td><td>
     <img src="https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python"/>
     <img src="https://img.shields.io/badge/NumPy-013243?style=flat-square&logo=numpy&logoColor=white" alt="NumPy"/>
     <img src="https://img.shields.io/badge/pandas-150458?style=flat-square&logo=pandas&logoColor=white" alt="pandas"/>
-    <img src="https://img.shields.io/badge/SciPy-8CAAE6?style=flat-square&logo=scipy&logoColor=white" alt="SciPy"/>
-    <sub>CasADi with IPOPT · pymoo (NSGA-II) · splines over Shell's official track coordinates</sub>
+    <img src="https://img.shields.io/badge/SciPy-8CAAE6?style=flat-square&logo=scipy&logoColor=white" alt="SciPy"/><br/>
+    <img src="https://img.shields.io/badge/CasADi_%2B_IPOPT-1D3C5C?style=flat-square" alt="CasADi + IPOPT"/>
+    <img src="https://img.shields.io/badge/pymoo_%28NSGA--II%29-1D3C5C?style=flat-square" alt="pymoo (NSGA-II)"/>
+    <img src="https://img.shields.io/badge/official_track_splines-1D3C5C?style=flat-square" alt="official track splines"/>
   </td></tr>
   <tr><td><b>Autonomy</b></td><td>
     <img src="https://img.shields.io/badge/ROS_2_Jazzy-22314E?style=flat-square&logo=ros&logoColor=white" alt="ROS 2 Jazzy"/>
-    <img src="https://img.shields.io/badge/Gazebo_Harmonic-F58113?style=flat-square&logo=ros&logoColor=white" alt="Gazebo Harmonic"/>
-    <img src="https://img.shields.io/badge/Isaac_Sim-76B900?style=flat-square&logo=nvidia&logoColor=white" alt="NVIDIA Isaac Sim"/>
-    <img src="https://img.shields.io/badge/Jetson_Orin-76B900?style=flat-square&logo=nvidia&logoColor=white" alt="NVIDIA Jetson Orin"/>
-    <img src="https://img.shields.io/badge/OpenCV-5C3EE8?style=flat-square&logo=opencv&logoColor=white" alt="OpenCV"/>
-    <sub>OpenUSD · LiDAR and stereo camera</sub>
+    <img src="https://img.shields.io/badge/Gazebo_Harmonic-F58113?style=flat-square" alt="Gazebo Harmonic"/>
+    <img src="https://img.shields.io/badge/Isaac_Sim-76B900?style=flat-square&logo=nvidia&logoColor=white" alt="Isaac Sim"/>
+    <img src="https://img.shields.io/badge/Jetson_Orin-76B900?style=flat-square&logo=nvidia&logoColor=white" alt="Jetson Orin"/>
+    <img src="https://img.shields.io/badge/OpenCV-5C3EE8?style=flat-square&logo=opencv&logoColor=white" alt="OpenCV"/><br/>
+    <img src="https://img.shields.io/badge/OpenUSD-1D3C5C?style=flat-square" alt="OpenUSD"/>
+    <img src="https://img.shields.io/badge/LiDAR-1D3C5C?style=flat-square" alt="LiDAR"/>
+    <img src="https://img.shields.io/badge/stereo_camera-1D3C5C?style=flat-square" alt="stereo camera"/>
   </td></tr>
   <tr><td><b>Data and web</b></td><td>
     <img src="https://img.shields.io/badge/MQTT-660066?style=flat-square&logo=mqtt&logoColor=white" alt="MQTT"/>
     <img src="https://img.shields.io/badge/TimescaleDB-FDB515?style=flat-square&logo=timescale&logoColor=black" alt="TimescaleDB"/>
     <img src="https://img.shields.io/badge/Foxglove-6F3BE8?style=flat-square" alt="Foxglove"/>
     <img src="https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=nodedotjs&logoColor=white" alt="Node.js"/>
-    <img src="https://img.shields.io/badge/React-20232A?style=flat-square&logo=react&logoColor=61DAFB" alt="React"/>
-    <sub>PostgreSQL · MCAP · Express · Socket.IO</sub>
+    <img src="https://img.shields.io/badge/React-20232A?style=flat-square&logo=react&logoColor=61DAFB" alt="React"/><br/>
+    <img src="https://img.shields.io/badge/PostgreSQL-1D3C5C?style=flat-square" alt="PostgreSQL"/>
+    <img src="https://img.shields.io/badge/MCAP-1D3C5C?style=flat-square" alt="MCAP"/>
+    <img src="https://img.shields.io/badge/Express-1D3C5C?style=flat-square" alt="Express"/>
+    <img src="https://img.shields.io/badge/Socket.IO-1D3C5C?style=flat-square" alt="Socket.IO"/>
   </td></tr>
   <tr><td><b>Engineering practice</b></td><td>
-    <img src="https://img.shields.io/badge/GitHub_Actions-2088FF?style=flat-square&logo=githubactions&logoColor=white" alt="GitHub Actions"/>
-    <sub>CI on every pull request · secret scanning · automated tests from the PC to the bench</sub>
+    <img src="https://img.shields.io/badge/GitHub_Actions-2088FF?style=flat-square&logo=githubactions&logoColor=white" alt="GitHub Actions"/><br/>
+    <img src="https://img.shields.io/badge/CI_on_every_PR-1D3C5C?style=flat-square" alt="CI on every PR"/>
+    <img src="https://img.shields.io/badge/secret_scanning-1D3C5C?style=flat-square" alt="secret scanning"/>
+    <img src="https://img.shields.io/badge/tests_from_PC_to_bench-1D3C5C?style=flat-square" alt="tests from PC to bench"/>
   </td></tr>
 </table>
+
+<sub>Bright badges are the core stack; the dark ones are the tools around it.</sub>
 
 ## 🧭 How we work
 
@@ -123,3 +143,7 @@ On the same track, Indianapolis, we went from 302 km/kWh in 2024 to **336 in 202
 Each member's work, season by season, is in the team's public portfolio: [`team-portfolio`](https://github.com/ELYOS-Racing/team-portfolio). The vehicles' code is private; members' contributions show on their profiles as private contributions.
 
 <p align="center"><sub>Team member? Sign in with your GitHub account to see the members-only "Start here" guide.</sub></p>
+
+<p align="center">
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:08202F,100:5B9BFF&height=90&section=footer" width="100%" alt=""/>
+</p>
