@@ -51,13 +51,13 @@ On the same track, Indianapolis, we went from 302 km/kWh in 2024 to **336 in 202
 | April 2027 | First public demo of the autonomy kit |
 | **June 2027** | Autonomous Driving Challenge, Silesia Ring, Poland. Our aim is to become the first team from the Americas to complete ADC attempts |
 
-> **Where the next kilometres come from.** Our 2026 attempts were consistent, five valid runs within about 8 % of each other, so the gap to the winner is in the car, not the driving. Our energy model ranks where it is. For 2027 we are replacing the hub motor with a chain drive and clutch (about 20 % less energy in the model), measuring rolling resistance and drag with coast-down tests, and putting every milliwatt of electronics on a budget.
+> **Where the next kilometres come from.** Our 2026 attempts were consistent, five valid runs within about 8 % of each other, so the gap to the winner is in the car, not the driving. Our energy model ranks where it is. For 2027 we are moving to a geared hub motor with a built-in freewheel, so the motor stops dragging while the car coasts (about 13 % less energy in the model), measuring rolling resistance and drag with coast-down tests, and putting every milliwatt of electronics on a budget.
 
 ## 🔧 What we build
 
 | Area | What it is | Highlights |
 |---|---|---|
-| 🏎️ **Mechanics** | A three-wheeled monocoque prototype with partial-Ackermann steering and hydraulic brakes | 30 kg in 2024; a chain drive with a clutch for 2027 |
+| 🏎️ **Mechanics** | A three-wheeled monocoque prototype with partial-Ackermann steering and hydraulic brakes | 30 kg in 2024; a geared hub motor with a freewheel for 2027 |
 | 🔌 **Electronics** | Our own 48 V, 45 A motor-driver board and telemetry board | Moved from Altium to KiCad and verified against the original gerbers; electrical and design-rule checks on every change |
 | ⚡ **Motor driver** | Field-oriented control (FOC) of a BLDC motor on an ARM Cortex-M7 at 600 MHz | 10 kHz current loop in a hardware interrupt; current sampling synchronized with the PWM; sensorless observer in development |
 | 📡 **Telemetry** | Sensors, sensor fusion, logging and a live link to the pits; cockpit display for the driver | A predictive co-pilot trained in simulation that tells the driver when to accelerate and when to coast |
