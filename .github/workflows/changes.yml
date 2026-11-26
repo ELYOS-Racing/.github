@@ -24,7 +24,10 @@
 #     (adc-twin-gdl) está en línea; `ubuntu-latest` si está apagada, sin red o pausada, si falta el secret de la App
 #     (CI_APP_ID / CI_APP_PRIVATE_KEY, con permiso «Self-hosted runners: Read») o si el repo tiene la variable
 #     CI_RUNNER=github. Úsala con `runs-on: ${{ needs.changes.outputs.runner }}` y llama a este workflow con
-#     `secrets: inherit`. `changes` y `ci-ok` siempre corren en GitHub, para que el CI termine aunque la Orin se caiga.
+#     `secrets: inherit`. `changes` y `ci-ok` corren en GitHub, para que el CI termine aunque la Orin se caiga.
+#   - Modo solo Orin: con la variable CI_RUNNER=orin (de la org o del repo) TODO corre en la Orin, también `changes`,
+#     `ci-ok` y los jobs fijos en GitHub (`runs-on: ${{ vars.CI_RUNNER == 'orin' && 'orin' || 'ubuntu-latest' }}`).
+#     Es para cuando no hay minutos de GitHub en los repos privados; si la Orin está apagada, el CI espera en cola.
 name: Áreas cambiadas
 
 on:
@@ -59,7 +62,7 @@ on:
 
 jobs:
   changes:
-    runs-on: ${{ inputs.selector }}
+    runs-on: ${{ vars.CI_RUNNER == 'orin' && 'orin' || inputs.selector }}
     outputs:
       areas: ${{ steps.f.outputs.areas }}
       runner: ${{ steps.runner.outputs.runner }}
@@ -104,7 +107,7 @@ jobs:
           echo "areas=$json" >> "$GITHUB_OUTPUT"
           echo "### Áreas: $json" >> "$GITHUB_STEP_SUMMARY"
       - id: app
-        if: env.HAS_APP == 'true' && vars.CI_RUNNER != 'github'
+        if: env.HAS_APP == 'true' && vars.CI_RUNNER != 'github' && vars.CI_RUNNER != 'orin'
         continue-on-error: true
         uses: actions/create-github-app-token@v3
         with:
@@ -114,10 +117,13 @@ jobs:
       - id: runner
         env:
           TOKEN: ${{ steps.app.outputs.token }}
+          FORZADO: ${{ vars.CI_RUNNER }}
         run: |
           set -uo pipefail
           runner=ubuntu-latest; motivo="sin token de la App o CI_RUNNER=github"
-          if [ -n "$TOKEN" ]; then
+          if [ "$FORZADO" = orin ]; then
+            runner=orin; motivo="modo solo Orin (CI_RUNNER=orin)"
+          elif [ -n "$TOKEN" ]; then
             estado=$(curl -fsS -H "Authorization: Bearer $TOKEN" -H "Accept: application/vnd.github+json"               "https://api.github.com/orgs/ELYOS-Racing/actions/runners?per_page=100"               | jq -r '[.runners[] | select(.status == "online") | select(any(.labels[]; .name == "orin"))] | length'               2>/dev/null || echo error)
             case "$estado" in
               ''|error) motivo="no se pudo consultar a GitHub (¿falta el permiso Self-hosted runners: Read?)" ;;
