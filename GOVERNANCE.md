@@ -43,9 +43,9 @@ Los profesores asesoran: se les informa, pero no aprueban código.
 |---|---|---|
 | Control | `fw-motor-driver`, `fw-protocol` | `luisxavierxd` (desde 21-nov-2026) |
 | ADC | `adc-stack`, `fw-protocol` | `luisxavierxd` (desde 21-nov-2026) |
-| Telemetría | `fw-telemetry`, `sw-dashboard`, `sw-strategy`, `fw-protocol` | Por nombrar; interino: `luisxavierxd` |
-| Electrónica | `hw-electronics` | Por nombrar |
-| Mecánica | `mech-cad` | Por nombrar |
+| Telemetría | `fw-telemetry`, `sw-dashboard`, `sw-strategy`, `fw-protocol` | `PPDLM` (desde 26-nov-2026) |
+| Electrónica | `hw-electronics` | `AlbertoGarciaGon` (interino, desde 26-nov-2026) |
+| Mecánica | `mech-cad` | `AlbertoGarciaGon` (interino, desde 26-nov-2026) |
 
 `fw-protocol` es el contrato entre placas, así que pertenece a tres áreas y lo lideran sus tres líderes.
 
