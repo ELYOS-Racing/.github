@@ -41,7 +41,7 @@ Los profesores asesoran: se les informa, pero no aprueban código.
 
 | Área | Repos | Líder |
 |---|---|---|
-| Control | `fw-motor-driver`, `fw-protocol` | `luisxavierxd` (desde 21-nov-2026) |
+| Driver | `fw-motor-driver`, `fw-protocol` | `luisxavierxd` (desde 21-nov-2026) |
 | ADC | `adc-stack`, `fw-protocol` | `luisxavierxd` (desde 21-nov-2026) |
 | Telemetría | `fw-telemetry`, `sw-dashboard`, `sw-strategy`, `fw-protocol` | `PPDLM` (desde 26-nov-2026) |
 | Electrónica | `hw-electronics` | `AlbertoGarciaGon` (interino, desde 26-nov-2026) |
