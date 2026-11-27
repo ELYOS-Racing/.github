@@ -21,9 +21,12 @@
 #   - push de un tag, workflow_dispatch, release o sin commit anterior: todas las áreas en true.
 #   - El job final `ci-ok` de cada repo (siempre corre) es el único check obligatorio: acepta jobs en success o skipped.
 #   - Salida `runner`: dónde corren los jobs del repo. `orin` si el runner self-hosted de la Orin del gemelo
-#     (adc-twin-gdl) está en línea; `ubuntu-latest` si está apagada, sin red o pausada, si falta el secret de la App
-#     (CI_APP_ID / CI_APP_PRIVATE_KEY, con permiso «Self-hosted runners: Read») o si el repo tiene la variable
-#     CI_RUNNER=github. Úsala con `runs-on: ${{ needs.changes.outputs.runner }}` y llama a este workflow con
+#     (adc-twin-gdl) está en línea y la espera estimada en su cola no pasa de CI_ORIN_MAX_ESPERA_MIN (variable de
+#     org o repo; 8 min por omisión). La espera suma lo que le falta al job que corre en la Orin y la duración
+#     típica (mediana de las últimas 3 corridas con éxito) de cada job en cola para ella en toda la org.
+#     `ubuntu-latest` si la Orin está saturada, apagada, sin red o pausada, si falta el secret de la App
+#     (CI_APP_ID / CI_APP_PRIVATE_KEY, con permisos «Self-hosted runners: Read» y «Actions: Read»; sin Actions: Read
+#     no ve la cola y manda a la Orin siempre que esté en línea) o si el repo tiene la variable CI_RUNNER=github. Úsala con `runs-on: ${{ needs.changes.outputs.runner }}` y llama a este workflow con
 #     `secrets: inherit`. `changes` y `ci-ok` corren en GitHub, para que el CI termine aunque la Orin se caiga.
 #   - Modo solo Orin: con la variable CI_RUNNER=orin (de la org o del repo) TODO corre en la Orin, también `changes`,
 #     `ci-ok` y los jobs fijos en GitHub (`runs-on: ${{ vars.CI_RUNNER == 'orin' && 'orin' || 'ubuntu-latest' }}`).
@@ -118,19 +121,91 @@ jobs:
         env:
           TOKEN: ${{ steps.app.outputs.token }}
           FORZADO: ${{ vars.CI_RUNNER }}
+          MAX_ESPERA_MIN: ${{ vars.CI_ORIN_MAX_ESPERA_MIN || '8' }}
+          RUN_ID: ${{ github.run_id }}
         run: |
+          # Orin si está en línea y la espera estimada en su cola no pasa de MAX_ESPERA_MIN; si no, GitHub.
+          # Espera = lo que le falta a lo que corre en la Orin + la duración típica de cada job en cola para ella
+          # (mediana de sus últimas corridas con éxito), entre los runners `orin` en línea.
           set -uo pipefail
-          runner=ubuntu-latest; motivo="sin token de la App o CI_RUNNER=github"
-          if [ "$FORZADO" = orin ]; then
-            runner=orin; motivo="modo solo Orin (CI_RUNNER=orin)"
-          elif [ -n "$TOKEN" ]; then
-            estado=$(curl -fsS -H "Authorization: Bearer $TOKEN" -H "Accept: application/vnd.github+json"               "https://api.github.com/orgs/ELYOS-Racing/actions/runners?per_page=100"               | jq -r '[.runners[] | select(.status == "online") | select(any(.labels[]; .name == "orin"))] | length'               2>/dev/null || echo error)
-            case "$estado" in
-              ''|error) motivo="no se pudo consultar a GitHub (¿falta el permiso Self-hosted runners: Read?)" ;;
-              0) motivo="la Orin no está en línea" ;;
-              *) runner=orin; motivo="la Orin está en línea" ;;
-            esac
-          fi
-          echo "runner=$runner" >> "$GITHUB_OUTPUT"
-          echo "### Runner: \`$runner\` ($motivo)" >> "$GITHUB_STEP_SUMMARY"
-          echo "Runner: $runner ($motivo)"
+          python3 - <<'PY'
+          import calendar, json, os, statistics, sys, time, urllib.request
+          from concurrent.futures import ThreadPoolExecutor
+          O = "ELYOS-Racing"; API = "https://api.github.com"
+          tok = os.environ.get("TOKEN", ""); forzado = os.environ.get("FORZADO", "")
+          maxe = float(os.environ.get("MAX_ESPERA_MIN") or 8); me = os.environ.get("RUN_ID", "")
+          DEF = 5.0  # minutos para un job sin historial
+          calls = 0
+          def get(path):
+              global calls; calls += 1
+              req = urllib.request.Request(API + path, headers={"Authorization": f"Bearer {tok}",
+                  "Accept": "application/vnd.github+json", "X-GitHub-Api-Version": "2022-11-28"})
+              with urllib.request.urlopen(req, timeout=15) as r:
+                  return json.load(r)
+          def ts(s):
+              return calendar.timegm(time.strptime(s, "%Y-%m-%dT%H:%M:%SZ"))
+          def salida(runner, motivo):
+              with open(os.environ["GITHUB_OUTPUT"], "a") as f: f.write(f"runner={runner}\n")
+              with open(os.environ["GITHUB_STEP_SUMMARY"], "a") as f: f.write(f"### Runner: `{runner}` ({motivo})\n")
+              print(f"Runner: {runner} ({motivo}); {calls} llamadas a la API"); sys.exit(0)
+          if forzado == "orin": salida("orin", "modo solo Orin (CI_RUNNER=orin)")
+          if not tok: salida("ubuntu-latest", "sin token de la App o CI_RUNNER=github")
+          try:
+              rs = [r for r in get(f"/orgs/{O}/actions/runners?per_page=100")["runners"]
+                    if r["status"] == "online" and any(l["name"] == "orin" for l in r["labels"])]
+          except Exception as e:
+              salida("ubuntu-latest", f"no se pudo consultar a GitHub ({e}; ¿falta Self-hosted runners: Read?)")
+          if not rs: salida("ubuntu-latest", "la Orin no está en línea")
+          # --- cola de la Orin en toda la org ---
+          try:
+              repos, page = [], 1
+              while True:
+                  d = get(f"/installation/repositories?per_page=100&page={page}")
+                  repos += [r["name"] for r in d["repositories"]]
+                  if len(repos) >= d["total_count"] or not d["repositories"]: break
+                  page += 1
+              def runs(a):
+                  repo, st = a
+                  return [(repo, r) for r in get(f"/repos/{O}/{repo}/actions/runs?status={st}&per_page=50")["workflow_runs"]
+                          if str(r["id"]) != me]
+              def jobs(a):
+                  repo, run = a
+                  return [(repo, run, j) for j in get(f"/repos/{O}/{repo}/actions/runs/{run['id']}/jobs?per_page=100")["jobs"]]
+              with ThreadPoolExecutor(16) as ex:
+                  rr = [x for l in ex.map(runs, [(r, st) for r in repos for st in ("queued", "in_progress")]) for x in l]
+                  jj = [x for l in ex.map(jobs, rr) for x in l]
+              cola, corriendo = [], []
+              for repo, run, j in jj:
+                  if "orin" not in j.get("labels", []): continue
+                  k = (repo, run["workflow_id"], j["name"])
+                  if j["status"] == "queued": cola.append(k)
+                  elif j["status"] == "in_progress" and j.get("started_at"): corriendo.append((k, ts(j["started_at"])))
+          except Exception as e:
+              salida("orin", f"la Orin está en línea; no se pudo leer su cola ({e}; ¿falta el permiso Actions: Read de la App?)")
+          hist = {}
+          def dur(k):  # mediana en minutos de ese job en sus últimas corridas con éxito
+              wk = (k[0], k[1])
+              if wk not in hist:
+                  hist[wk] = {}
+                  try:
+                      ok = get(f"/repos/{O}/{k[0]}/actions/workflows/{k[1]}/runs?status=success&per_page=3")["workflow_runs"]
+                      for run in ok:
+                          for j in get(f"/repos/{O}/{k[0]}/actions/runs/{run['id']}/jobs?per_page=100")["jobs"]:
+                              if j.get("started_at") and j.get("completed_at") and j.get("conclusion") == "success":
+                                  hist[wk].setdefault(j["name"], []).append((ts(j["completed_at"]) - ts(j["started_at"])) / 60)
+                  except Exception:
+                      pass
+              v = hist[wk].get(k[2])
+              return statistics.median(v) if v else DEF
+          libres = max(len(rs) - len(corriendo), 0)
+          if libres and not cola: salida("orin", f"la Orin está libre ({len(corriendo)} corriendo, nada en cola)")
+          with ThreadPoolExecutor(8) as ex:  # historial de cada workflow una sola vez, en paralelo
+              list(ex.map(dur, {(k[0], k[1]): k for k in cola + [k for k, _ in corriendo]}.values()))
+          ahora = time.time()
+          resto = sum(max(dur(k) - (ahora - t0) / 60, 1.0) for k, t0 in corriendo)
+          enc = sum(dur(k) for k in cola)
+          espera = (resto + enc) / len(rs)
+          detalle = f"{len(corriendo)} corriendo, {len(cola)} en cola, espera estimada {espera:.0f} min, límite {maxe:.0f}"
+          if espera > maxe: salida("ubuntu-latest", f"la Orin está saturada: {detalle}")
+          salida("orin", f"la Orin está en línea: {detalle}")
+          PY
