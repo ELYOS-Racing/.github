@@ -73,7 +73,7 @@ Los owners pueden mergear sin las aprobaciones requeridas en cambios de **estruc
 |---|---|---|---|
 | Líder de área | `leads` y `<area>-leads` | Write en todos los repos; Maintain en los de su área | Los repos de su área |
 | Contribuidor calificado | `<repo>-qualified` (se crea con el primer calificado del repo) | El de su team de área | Ese repo |
-| Contribuidor | Su team de área (`fw`, `hw`, `mech`, `adc`, `ops`) | Write en los repos de su área | — |
+| Contribuidor | Su team de área (`driver`, `telemetry`, `hw`, `mech`, `adc`, `ops`) | Write en los repos de su área | — |
 | Owner | `owners` (code owners de `.github`, `.github-private`, `ops-tasks` y de `pm/` y `releases/` de `sys-integration`) | Admin | Todos (es el override) |
 | Mantenimiento del sitio | `maintenance` (code owner de `team-portfolio`) | Maintain en `team-portfolio` | — |
 | Cuenta de automatización | `merge-bypass` | — | Todos |
